@@ -2,11 +2,11 @@ const jwt = require("jsonwebtoken");
 
 let generateToken = (user, secretSignature, tokenLife) => {
   return new Promise((resolve, reject) => {
-    let userData={
-      _id:user._id,
+    let userData = {
+      _id: user._id,
     }
     jwt.sign(
-      {data: userData},
+      { data: userData },
       secretSignature,
       {
         algorithm: "HS256",
@@ -17,7 +17,7 @@ let generateToken = (user, secretSignature, tokenLife) => {
           return reject(error);
         }
         resolve(token);
-    });
+      });
   });
 }
 

@@ -77,6 +77,24 @@ const getList = async (req, res) => {
         })
 }
 
+const getListPostUser = async (req, res) => {
+    const formatData = {
+        userId: req.user.data._id, 
+        lastId: req.params.lastId
+    }
+
+    const postService = new PostService(db, formatData);
+
+    let listPost = await postService.getListPostUser();
+    return res.status(200)
+        .json({
+            message: "Get list post user was successful",
+            result: {
+                listPost
+            }
+        })
+}
+
 const getInfoPost = async(req, res) => {
     const formatData = {
         postId: req.params._id
@@ -98,6 +116,7 @@ module.exports = {
     createPost,
     multerMid,
     getInfoPost,
-    getList
+    getList,
+    getListPostUser
 };
 

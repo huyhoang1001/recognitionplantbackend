@@ -22,8 +22,30 @@ class Post {
         ]
       })
       .limit(10)
-      .sort({ _id: 1 })
+      .sort({ _id: 1, 'created': -1 })
       .populate('postedBy', '_id fullName avatar email')
+    return list_post
+  }
+
+  async getListPostUser() {
+    const userId = this.data.userId;
+    const lastId = this.data.lastId;
+
+    const list_post = await this.db.Post
+      .find({
+        postedBy: userId ,
+        $and: [
+          {
+            _id: {
+              $gt: lastId,
+            }
+          }
+        ]
+      })
+      .limit(10)
+      .sort({ 'created': -1 })
+      .populate('postedBy', '_id fullName avatar email')
+
     return list_post
   }
 
