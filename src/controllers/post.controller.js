@@ -1,7 +1,8 @@
 const multer = require('multer');
 const uploadImage = require('../helpers/cloud.helper');
-const { PostService } = require('../services');
+const { PostService, ContributeService } = require('../services');
 const db = require('../db');
+const { Contribute } = require('../db');
 
 //config multer
 const multerMid = multer({
@@ -11,7 +12,7 @@ const multerMid = multer({
     },
 }).array("plant_images", 5);
 
-const createPost = async(req, res) => {
+const create = async(req, res) => {
     const myFile = req.files;
     if (!myFile) {
         return res.status(400).json({
@@ -99,21 +100,25 @@ const getInfoPost = async(req, res) => {
     const formatData = {
         postId: req.params._id
     }
-
+    
     const postService = new PostService(db, formatData);
+    const contributeService = new ContributeService(db, formatData);
 
-    let post = await postService.getInfoPost();
+    let post = await postService.getInfo();
+    let contributes = await contributeService.getList();
+
     return res.status(200)
         .json({
             message: "Get info post success",
             result: {
-                post
+                post: post,
+                contributes: contributes
             }
         })
 }
 
 module.exports = {
-    createPost,
+    create,
     multerMid,
     getInfoPost,
     getList,

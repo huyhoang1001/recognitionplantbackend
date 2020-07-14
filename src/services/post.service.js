@@ -51,7 +51,7 @@ class Post {
     return list_post
   }
 
-  async getInfoPost() {
+  async getInfo() {
     const postId = this.data.postId;
     return await this.db.Post.findById(postId)
       .populate('postedBy', '_id fullName avatar email')
