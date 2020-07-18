@@ -16,13 +16,13 @@ class Post {
         $and: [
           {
             _id: {
-              $gt: lastId,
+              $lt: lastId
             }
           }
         ]
       })
       .limit(10)
-      .sort({ _id: 1, 'created': -1 })
+      .sort({ 'created': -1 })
       .populate('postedBy', '_id fullName avatar email')
       .populate('mentionedPlant', '_id nameVN')
     return list_post
@@ -38,13 +38,13 @@ class Post {
         $and: [
           {
             _id: {
-              $gt: lastId,
+              $lt: lastId
             }
           }
         ]
       })
       .limit(10)
-      .sort({ _id: 1,'created': -1 })
+      .sort({ 'created': -1 })
       .populate('postedBy', '_id fullName avatar email')
       .populate('mentionedPlant', '_id nameVN')
 
