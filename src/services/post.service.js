@@ -44,7 +44,7 @@ class Post {
         ]
       })
       .limit(10)
-      .sort({ 'created': -1 })
+      .sort({ _id: 1,'created': -1 })
       .populate('postedBy', '_id fullName avatar email')
       .populate('mentionedPlant', '_id nameVN')
 
